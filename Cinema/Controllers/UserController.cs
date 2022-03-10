@@ -26,6 +26,16 @@ namespace Cinema.Controllers
             _unitOfWork = unitOfWork;
         }
 
+
+
+        [HttpGet("GetAllUsers")]
+        public ActionResult<IEnumerable<User>> GetAll()
+        {
+            var data = _unitOfWork.User.GetAll();
+            return Ok(data);
+        }
+
+
         [HttpPost("Login")]
 
         //POST : /api/Users/Login

@@ -47,6 +47,19 @@ namespace RepositoryPatternWithUOW.EF.Repositories
 
             return query.Where(criteria).ToList();
         }
+
+        public IEnumerable<T> FindAll( string[] includes = null)
+        {
+            IQueryable<T> query = _context.Set<T>();
+
+            if (includes != null)
+                foreach (var include in includes)
+                    query = query.Include(include);
+
+            return query.ToList();
+        }
+
+
         public T Find(Expression<Func<T, bool>> criteria, string[] includes = null)
         {
             IQueryable<T> query = _context.Set<T>();

@@ -16,6 +16,7 @@ namespace RepositoryPatternWithUOW.Core.Interfaces
         void Delete(T entity);
         T Find(Expression<Func<T, bool>> criteria, string[] includes = null);
         IEnumerable<T> FindAll(Expression<Func<T, bool>> criteria, string[] includes = null);
+        IEnumerable<T> FindAll( string[] includes = null);
 
     }
 }

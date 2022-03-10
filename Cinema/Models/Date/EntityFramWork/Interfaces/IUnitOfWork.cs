@@ -1,4 +1,5 @@
 ﻿using Cinema.Models.Date;
+using Cinema.Models.Date.EntityFramWork.Interfaces;
 using Cinema.Models.EntityFramWork.Interfaces;
 using RepositoryPatternWithUOW.Core.Interfaces;
 using System;
@@ -14,7 +15,7 @@ namespace RepositoryPatternWithUOW.Core
         IUserRepositry User { get; }
         IBaseRepository<Movies> Movies { get; }
 
-        IBaseRepository<Booking> Booking { get; }
+        IBookingRepo Booking { get; }
         IBaseRepository<Hall> Halls { get; }
         IBaseRepository<Times> Times { get; }
 

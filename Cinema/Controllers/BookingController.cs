@@ -24,7 +24,9 @@ namespace Cinema.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Booking>> GetAll()
         {
-            return Ok(_unitOfWork.Booking.GetAll());
+
+            var data = _unitOfWork.Booking.FindAll(  new[] { "Movies", "User", "Halls", "Times" });
+            return Ok(data);
         }
 
         // GET: api/Movies/5
@@ -80,17 +82,21 @@ namespace Cinema.Controllers
         // PUT: api/Movies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Booking movies)
+        public IActionResult Put(int id, Booking model)
         {
-            if (id != movies.Id)
+            try
             {
-                return BadRequest();
+                _unitOfWork.Booking.UpdateBooking(model);
+                _unitOfWork.Complete();
+
+                return Ok("Updated");
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
 
-            _unitOfWork.Booking.Update(movies);
-            _unitOfWork.Complete();
-
-            return Ok("Updated");
         }
 
         // POST: api/Movies
@@ -100,7 +106,7 @@ namespace Cinema.Controllers
             _unitOfWork.Booking.Add(movies);
             _unitOfWork.Complete();
 
-            return CreatedAtAction("GetMovies", new { id = movies.Id }, movies);
+            return Ok( movies);
         }
 
         // DELETE: api/Movies/5

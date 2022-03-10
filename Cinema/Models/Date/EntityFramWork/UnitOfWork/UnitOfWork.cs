@@ -1,4 +1,6 @@
 ﻿using Cinema.Models.Date;
+using Cinema.Models.Date.EntityFramWork.Interfaces;
+using Cinema.Models.Date.EntityFramWork.Repositories;
 using Cinema.Models.EntityFramWork.Interfaces;
 using Cinema.Models.EntityFramWork.Repositories;
 using RepositoryPatternWithUOW.Core;
@@ -18,7 +20,7 @@ namespace RepositoryPatternWithUOW.EF
 
         public IUserRepositry User { get; private set; }
         public IBaseRepository<Movies> Movies { get; private set; }
-        public IBaseRepository<Booking> Booking { get; private set; }
+        public IBookingRepo Booking { get; private set; }
         public IBaseRepository<Hall> Halls { get; private set; }
         public IBaseRepository<Times> Times { get; private set; }
 
@@ -29,7 +31,7 @@ namespace RepositoryPatternWithUOW.EF
 
             User = new UserRepositry(_context);
             Movies = new BaseRepository<Movies>(_context);
-            Booking = new BaseRepository<Booking>(_context);
+            Booking = new BookingRepo(_context);
             Times = new BaseRepository<Times>(_context);
             Halls = new BaseRepository<Hall>(_context);
 

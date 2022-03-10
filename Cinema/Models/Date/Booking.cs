@@ -24,17 +24,18 @@ namespace Cinema.Models.Date
 
         [ForeignKey("Halls")]
         public int HallsId { get; set; }
+        public DateTime DayBooking { get; set; }
 
-        [JsonIgnore]
+ 
 
         public virtual User User { get; set; }
-        [JsonIgnore]
+     
 
         public virtual Movies Movies { get; set; }
-        [JsonIgnore]
+      
 
         public virtual Times Times { get; set; }
-        [JsonIgnore]
+ 
 
         public virtual Hall Halls { get; set; }
     }
