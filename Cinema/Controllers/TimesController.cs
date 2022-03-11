@@ -65,7 +65,7 @@ namespace Cinema.Controllers
             _unitOfWork.Times.Update(Times);
             _unitOfWork.Complete();
 
-            return Ok("Updated");
+            return Ok(true);
         }
 
         // POST: api/Movies
@@ -75,7 +75,7 @@ namespace Cinema.Controllers
             _unitOfWork.Times.Add(Times);
             _unitOfWork.Complete();
 
-            return Ok(Times);
+            return Ok(true);
         }
 
         // DELETE: api/Movies/5

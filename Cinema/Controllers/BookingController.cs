@@ -86,10 +86,23 @@ namespace Cinema.Controllers
         {
             try
             {
-                _unitOfWork.Booking.UpdateBooking(model);
+
+                var data = _unitOfWork.Booking.FindAll(e => e.HallsId == model.HallsId && e.MovieId == model.MovieId && e.TimerId == model.TimerId && e.DayBooking.Date == model.DayBooking.Date, null).Count();
+                var limit = _unitOfWork.Halls.Find(e => e.Id == model.HallsId);
+                if (data < limit.Limit)
+                {
+
+
+                    _unitOfWork.Booking.UpdateBooking(model);
                 _unitOfWork.Complete();
 
-                return Ok("Updated");
+                return Ok(true);
+                }
+                else
+                {
+
+                    return Ok(false);
+                }
             }
             catch (Exception ex)
             {
@@ -101,12 +114,23 @@ namespace Cinema.Controllers
 
         // POST: api/Movies
         [HttpPost]
-        public ActionResult<Booking> Post(Booking movies)
+        public ActionResult<Booking> Post(Booking model)
         {
-            _unitOfWork.Booking.Add(movies);
-            _unitOfWork.Complete();
+           var data=  _unitOfWork.Booking.FindAll(e => e.HallsId == model.HallsId && e.MovieId == model.MovieId && e.TimerId == model.TimerId && e.DayBooking.Date == model.DayBooking.Date, null).Count();
+            var limit = _unitOfWork.Halls.Find(e => e.Id == model.HallsId);
+            if (data <  limit.Limit)
+            {
+                _unitOfWork.Booking.Add(model);
+                _unitOfWork.Complete();
 
-            return Ok( movies);
+                return Ok(true);
+            }
+            else
+            {
+ 
+                return Ok(false);
+            }
+           
         }
 
         // DELETE: api/Movies/5

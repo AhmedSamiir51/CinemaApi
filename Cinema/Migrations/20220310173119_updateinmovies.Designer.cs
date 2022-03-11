@@ -4,14 +4,16 @@ using Cinema.Models.Date;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cinema.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220310173119_updateinmovies")]
+    partial class updateinmovies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,7 +101,8 @@ namespace Cinema.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdHalls");
+                    b.HasIndex("IdHalls")
+                        .IsUnique();
 
                     b.ToTable("Movies");
                 });
@@ -153,8 +156,8 @@ namespace Cinema.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("int");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -204,8 +207,8 @@ namespace Cinema.Migrations
             modelBuilder.Entity("Cinema.Models.Date.Movies", b =>
                 {
                     b.HasOne("Cinema.Models.Date.Hall", "Halls")
-                        .WithMany("Movies")
-                        .HasForeignKey("IdHalls")
+                        .WithOne("Movies")
+                        .HasForeignKey("Cinema.Models.Date.Movies", "IdHalls")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -1,5 +1,6 @@
 ﻿using Cinema.Images;
 using Cinema.Models.Date;
+using Cinema.Models.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryPatternWithUOW.Core;
@@ -26,8 +27,9 @@ namespace Cinema.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Movies>> GetAll()
         {
-            var data = _unitOfWork.Movies.GetAll();
-            return Ok(data.Take(3)) ;
+            var data = _unitOfWork.Movies.GetListOfMovies();
+
+            return Ok(data ) ;
         }
 
         // GET: api/Movies/5
@@ -57,36 +59,48 @@ namespace Cinema.Controllers
             _unitOfWork.Movies.Update(movies);
             _unitOfWork.Complete();
 
-            return Ok("Updated");
+            return Ok(true);
         }
 
         // POST: api/Movies
         [HttpPost("SaveMovies")]
-        public  ActionResult<Movies> SaveMovies([FromForm]  Movies movies)
+        public  ActionResult<Movies> SaveMovies([FromForm] MoviesModel model)
         {
             try
             {
-                _unitOfWork.Movies.Add(movies);
+
+                var movies = new Movies() {
+                    Description=model.Description,
+                    IdHalls=model.IdHalls,
+                    Name=model.Name,
+                    IsVisibale=model.IsVisibale,
+                    PhotoData = model.PhotoData,
+                    TraileUrl = model.TraileUrl,
+                    ProfilePicture = model.ProfilePicture,
+                };
+
+
+              var mm=  _unitOfWork.Movies.Add(movies);
                 _unitOfWork.Complete();
 
-                if (movies.ProfilePicture != null)
+                if (model.ProfilePicture != null)
                 {
-                    string[] photoName = movies.ProfilePicture.FileName.Split('.');
-                    var imageName = $"{movies.Id}.{photoName[photoName.Length - 1]}";
+                    string[] photoName = model.ProfilePicture.FileName.Split('.');
+                    var imageName = $"{mm.Id}.{photoName[photoName.Length - 1]}";
                     string uploaded = Path.Combine("Images");
                     string filpath = Path.Combine(uploaded, imageName);
 
                     var filePath = $"~Images \\{imageName}";
-                    var profilePic = ImageStuff.HandleImage(movies.ProfilePicture);
+                    var profilePic = ImageStuff.HandleImage(model.ProfilePicture);
 
                     using var imageMemory = new MemoryStream();
                     profilePic.Write(imageName);
                     System.IO.File.Move(imageName, filpath);
-                    movies.PhotoData = filpath;
+                    mm.PhotoData = filpath;
                 }
                 _unitOfWork.Complete();
 
-                return Ok( movies);
+                return Ok(true);
 
             }
             catch (Exception ex)

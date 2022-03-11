@@ -1,5 +1,6 @@
 ﻿using Cinema.Models.Date;
 using Cinema.Models.ViewModel;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -94,7 +97,7 @@ namespace Cinema.Controllers
                     Email = model.Email,
                     Password = model.Password,
                     PhoneNumber = model.PhoneNumber,
-                    RoleId=model.RolesId
+                    RoleId=1
                 };
 
                 var user = _unitOfWork.User.Add(data);
@@ -110,6 +113,35 @@ namespace Cinema.Controllers
 
         }
 
+        [HttpPost("SendEmail")]
+        public ActionResult  SendEmail(MailSender Email)
+        {
+            try
+            {
+                MailMessage message = new MailMessage();
+                SmtpClient smtp = new SmtpClient();
 
+                message.From = new MailAddress("FromMailAddress");
+                message.To.Add(new MailAddress(Email.ToMailAddress));
+                message.Subject = Email.Name;
+                message.IsBodyHtml = true; //to make message body as html  
+                message.Body = Email.Message;
+                smtp.Port = 587;
+                smtp.Host = "smtp.gmail.com"; //for gmail host  
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential("FromMailAddress", "password");
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.Send(message);
+
+                return Ok( );
+            }
+            catch (Exception e)
+            {
+                return Content($"{e.Message}");
+            }
+
+
+        }
     }
 }

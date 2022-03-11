@@ -17,7 +17,7 @@ namespace Cinema.Models.ViewModel
         [Required]
         public string Password { get; set; }
         [Required]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
          public int RolesId { get; set; }
 
     }

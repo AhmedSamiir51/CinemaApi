@@ -21,7 +21,16 @@ namespace RepositoryPatternWithUOW.EF.Repositories
 
         public IEnumerable<T> GetAll()
         {
-            return _context.Set<T>().ToList();
+            try
+            {
+                return _context.Set<T>().ToList();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
       

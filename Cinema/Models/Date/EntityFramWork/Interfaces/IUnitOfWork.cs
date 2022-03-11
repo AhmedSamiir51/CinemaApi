@@ -1,5 +1,6 @@
 ﻿using Cinema.Models.Date;
 using Cinema.Models.Date.EntityFramWork.Interfaces;
+using Cinema.Models.Date.EntityFramWork.Repositories;
 using Cinema.Models.EntityFramWork.Interfaces;
 using RepositoryPatternWithUOW.Core.Interfaces;
 using System;
@@ -13,7 +14,7 @@ namespace RepositoryPatternWithUOW.Core
     public interface IUnitOfWork : IDisposable
     {
         IUserRepositry User { get; }
-        IBaseRepository<Movies> Movies { get; }
+        IMoviesRepo Movies { get; }
 
         IBookingRepo Booking { get; }
         IBaseRepository<Hall> Halls { get; }

@@ -16,7 +16,7 @@ namespace Cinema.Models.Date
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         [ForeignKey("Roles")]
         public int RoleId { get; set; }
         [JsonIgnore]

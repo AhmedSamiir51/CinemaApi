@@ -33,6 +33,33 @@ namespace Cinema.Controllers
             return Ok(Halls);
         }
 
+
+        [HttpGet("GetAllWhereNotInMovie")]
+        public ActionResult<Hall> GetAllNotInMovie()
+        {
+            var Halls = _unitOfWork.Movies.GetListOfHall();
+ 
+            if (Halls == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Halls);
+        }
+
+        [HttpGet("GetAllWhereNotInMovie/{id}")]
+        public ActionResult<Hall> GetAllNotInMovie(int id)
+        {
+            var Halls = _unitOfWork.Movies.GetListOfHall(id);
+
+            if (Halls == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Halls);
+        }
+
         // GET: api/Movies/5
         [HttpGet("{id}")]
         public ActionResult<Hall> GetById(int id)
@@ -64,7 +91,7 @@ namespace Cinema.Controllers
             _unitOfWork.Halls.Update(Halls);
             _unitOfWork.Complete();
 
-            return Ok("Updated");
+            return Ok(true);
         }
 
         // POST: api/Movies
@@ -74,7 +101,7 @@ namespace Cinema.Controllers
             _unitOfWork.Halls.Add(Halls);
             _unitOfWork.Complete();
 
-            return Ok(Halls);
+            return Ok(true);
         }
 
         // DELETE: api/Movies/5

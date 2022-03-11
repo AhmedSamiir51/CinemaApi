@@ -19,7 +19,7 @@ namespace RepositoryPatternWithUOW.EF
         private readonly ApplicationDbContext _context;
 
         public IUserRepositry User { get; private set; }
-        public IBaseRepository<Movies> Movies { get; private set; }
+        public IMoviesRepo Movies { get; private set; }
         public IBookingRepo Booking { get; private set; }
         public IBaseRepository<Hall> Halls { get; private set; }
         public IBaseRepository<Times> Times { get; private set; }
@@ -30,7 +30,7 @@ namespace RepositoryPatternWithUOW.EF
             _context = context;
 
             User = new UserRepositry(_context);
-            Movies = new BaseRepository<Movies>(_context);
+            Movies = new MoviesRepo(_context);
             Booking = new BookingRepo(_context);
             Times = new BaseRepository<Times>(_context);
             Halls = new BaseRepository<Hall>(_context);
