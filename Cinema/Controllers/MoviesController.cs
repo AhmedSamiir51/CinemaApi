@@ -32,6 +32,17 @@ namespace Cinema.Controllers
             return Ok(data ) ;
         }
 
+
+        [HttpGet("GetHallIdFromMovies/{id}")]
+        public ActionResult<IEnumerable<Hall>> GetHallIdFromMovies(int id)
+        {
+            var data = _unitOfWork.Movies.GetHallIdFromMovies(id);
+
+            return Ok(data);
+        }
+
+
+
         // GET: api/Movies/5
         [HttpGet("{id}")]
         public ActionResult<Movies> GetById(int id)

@@ -39,13 +39,17 @@ namespace Cinema.Models.Date.EntityFramWork.Repositories
 
         public List<Hall> GetListOfHall(int id )
         {
-
-
             var books = _context.Halls.FromSqlRaw(" select  h.* from movies m  " +
                                                    "right join Halls h on h.Id = m.IdHalls " +
                                                    "WHERE m.id IS NULL or h.Id = {0}",id).ToList();
+            return books;
+        }
 
 
+
+        public Hall GetHallIdFromMovies(int id)
+        {
+            var books = _context.Movies.Where(e => e.Id == id).Select(e => e.Halls).FirstOrDefault();
             return books;
         }
     }

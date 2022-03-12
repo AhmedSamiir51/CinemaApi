@@ -11,5 +11,6 @@ namespace Cinema.Models.Date.EntityFramWork.Interfaces
         List<Movies> GetListOfMovies();
         List<Hall> GetListOfHall();
         List<Hall> GetListOfHall(int id );
+        Hall GetHallIdFromMovies(int id );
     }
 }
