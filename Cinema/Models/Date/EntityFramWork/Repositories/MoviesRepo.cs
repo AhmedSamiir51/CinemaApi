@@ -10,7 +10,7 @@ namespace Cinema.Models.Date.EntityFramWork.Repositories
 {
     public class MoviesRepo : BaseRepository<Movies>, IMoviesRepo
     {
-
+        
         private readonly ApplicationDbContext _context;
 
         public MoviesRepo(ApplicationDbContext context) : base(context)
@@ -23,7 +23,11 @@ namespace Cinema.Models.Date.EntityFramWork.Repositories
             var data = _context.Movies.Where(e=>e.IsVisibale==true).Include(s => s.Halls).ToList();
             return data;
         }
-
+        public List<Movies> AllGetListOfMovies()
+        {
+            var data = _context.Movies.Include(s => s.Halls).ToList();
+            return data;
+        }
 
         public List<Hall> GetListOfHall()
         {

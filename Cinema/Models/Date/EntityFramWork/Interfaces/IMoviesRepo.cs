@@ -9,6 +9,7 @@ namespace Cinema.Models.Date.EntityFramWork.Interfaces
      public  interface IMoviesRepo:IBaseRepository<Movies>
     {
         List<Movies> GetListOfMovies();
+        List<Movies> AllGetListOfMovies();
         List<Hall> GetListOfHall();
         List<Hall> GetListOfHall(int id );
         Hall GetHallIdFromMovies(int id );

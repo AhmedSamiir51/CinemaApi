@@ -33,6 +33,18 @@ namespace Cinema.Controllers
         }
 
 
+        [HttpGet("AllGetListOfMovies")]
+        public ActionResult<IEnumerable<Movies>> AllGetListOfMovies()
+        {
+            var data = _unitOfWork.Movies.AllGetListOfMovies();
+
+            return Ok(data);
+        }
+
+
+
+
+
         [HttpGet("GetHallIdFromMovies/{id}")]
         public ActionResult<IEnumerable<Hall>> GetHallIdFromMovies(int id)
         {
